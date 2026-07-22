@@ -58,9 +58,9 @@ export function GrowthChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Card className="border-border/60 shadow-sm">
+      <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardTitle className="flex items-center gap-2 text-sm sm:text-lg">
             <TrendingUp className="h-5 w-5 text-emerald-600" />
             Kurva Pertumbuhan Biomassa
           </CardTitle>
@@ -76,7 +76,7 @@ export function GrowthChart({
             <Stat label="Bobot Panen" value={`${harvestSizeGram} g/ekor`} tone="teal" />
           </div>
 
-          <div className="h-52 w-full sm:h-80 overflow-hidden">
+          <div className="h-40 w-full sm:h-80 overflow-hidden">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data} margin={{ top: 10, right: 5, left: -10, bottom: 0 }}>
                 <defs>
@@ -195,9 +195,9 @@ function Stat({
     teal: "bg-teal-50 text-teal-700 dark:bg-teal-950/30 dark:text-teal-300",
   };
   return (
-    <div className={`rounded-md p-2 ${tones[tone]}`}>
+    <div className={`rounded-md p-1.5 sm:p-2 ${tones[tone]}`}>
       <p className="text-[10px] font-medium opacity-80">{label}</p>
-      <p className="mt-0.5 text-sm font-bold">{value}</p>
+      <p className="mt-0.5 text-xs sm:text-sm font-bold">{value}</p>
     </div>
   );
 }

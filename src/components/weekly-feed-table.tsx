@@ -73,9 +73,9 @@ export function WeeklyFeedTable({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Card className="border-border/60 shadow-sm">
+      <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardTitle className="flex items-center gap-2 text-sm sm:text-lg">
             <Wheat className="h-5 w-5 text-amber-600" />
             Jadwal Pakan Mingguan
           </CardTitle>
@@ -104,54 +104,58 @@ export function WeeklyFeedTable({
           </div>
 
           {/* Tabel mingguan — scroll vertikal & horizontal untuk mobile */}
-          <div className="max-h-[500px] overflow-auto rounded-md border border-border/60">
-            <Table className="min-w-[640px]">
+          <div className="relative">
+            {/* Scroll hint gradient — overlay on mobile to indicate more content */}
+            <div className="absolute right-0 top-0 z-30 h-full w-8 bg-gradient-to-l from-background/90 to-transparent pointer-events-none sm:hidden rounded-r-md" />
+            <div className="max-h-[500px] overflow-auto rounded-md border border-border/60">
+            <Table className="min-w-[560px] sm:min-w-[640px]">
               <TableHeader className="sticky top-0 z-20 bg-background">
                 <TableRow>
-                  <TableHead className="text-xs whitespace-nowrap">Minggu</TableHead>
-                  <TableHead className="text-xs whitespace-nowrap">Hari</TableHead>
-                  <TableHead className="text-xs text-center whitespace-nowrap">Fase</TableHead>
-                  <TableHead className="text-xs text-right whitespace-nowrap">Bobot/Ekor</TableHead>
-                  <TableHead className="text-xs text-right whitespace-nowrap">FR %/hari</TableHead>
-                  <TableHead className="text-xs text-right whitespace-nowrap">Pakan/hari</TableHead>
-                  <TableHead className="text-xs text-right whitespace-nowrap">Pakan/minggu</TableHead>
-                  <TableHead className="text-xs text-right whitespace-nowrap">Biomassa</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs whitespace-nowrap">Minggu</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs whitespace-nowrap">Hari</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs text-center whitespace-nowrap">Fase</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs text-right whitespace-nowrap">Bobot/Ekor</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs text-right whitespace-nowrap">FR %/hari</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs text-right whitespace-nowrap">Pakan/hari</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs text-right whitespace-nowrap">Pakan/minggu</TableHead>
+                  <TableHead className="text-[10px] sm:text-xs text-right whitespace-nowrap">Biomassa</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {weeks.map((w) => (
                   <TableRow key={w.week}>
-                    <TableCell className="text-xs font-medium whitespace-nowrap">{w.week}</TableCell>
-                    <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                    <TableCell className="text-[10px] sm:text-xs font-medium whitespace-nowrap py-1.5 sm:py-2">{w.week}</TableCell>
+                    <TableCell className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap py-1.5 sm:py-2">
                       {w.startDay}-{w.endDay}
                     </TableCell>
-                    <TableCell className="text-center whitespace-nowrap">
+                    <TableCell className="text-center whitespace-nowrap py-1.5 sm:py-2">
                       <Badge
                         variant="outline"
-                        className={`text-[10px] ${phaseColors[w.phase]}`}
+                        className={`text-[9px] sm:text-[10px] ${phaseColors[w.phase]}`}
                       >
                         {phaseLabels[w.phase]}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs text-right font-mono whitespace-nowrap">
+                    <TableCell className="text-[10px] sm:text-xs text-right font-mono whitespace-nowrap py-1.5 sm:py-2">
                       {formatRp(w.fishWeightGram)} g
                     </TableCell>
-                    <TableCell className="text-xs text-right font-mono whitespace-nowrap">
+                    <TableCell className="text-[10px] sm:text-xs text-right font-mono whitespace-nowrap py-1.5 sm:py-2">
                       {w.feedingRate}%
                     </TableCell>
-                    <TableCell className="text-xs text-right font-mono whitespace-nowrap">
+                    <TableCell className="text-[10px] sm:text-xs text-right font-mono whitespace-nowrap py-1.5 sm:py-2">
                       {formatRp(w.feedPerDayKg)} kg
                     </TableCell>
-                    <TableCell className="text-xs text-right font-mono font-semibold text-amber-700 dark:text-amber-400 whitespace-nowrap">
+                    <TableCell className="text-[10px] sm:text-xs text-right font-mono font-semibold text-amber-700 dark:text-amber-400 whitespace-nowrap py-1.5 sm:py-2">
                       {formatRp(w.feedPerWeekKg)} kg
                     </TableCell>
-                    <TableCell className="text-xs text-right font-mono whitespace-nowrap">
+                    <TableCell className="text-[10px] sm:text-xs text-right font-mono whitespace-nowrap py-1.5 sm:py-2">
                       {formatRp(w.biomassKg)} kg
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
+            </div>
           </div>
 
           <div className="flex items-start gap-2 rounded-md bg-muted/40 p-2.5">
