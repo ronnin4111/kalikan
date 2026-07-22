@@ -151,7 +151,7 @@ export function ResultTabs({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <Card className="overflow-hidden border-emerald-200 bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-md dark:border-emerald-900">
+        <Card className="overflow-hidden border-emerald-200 bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-md transition-shadow hover:shadow-lg dark:border-emerald-900">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardDescription className="text-emerald-50/90">
@@ -162,16 +162,16 @@ export function ResultTabs({
                 {selectedSystem.name.split(" ")[0]}
               </Badge>
             </div>
-            <p className="mt-0.5 text-[10px] italic text-emerald-50/70">
+            <p className="mt-0.5 text-[11px] italic text-emerald-50/70">
               {selectedFish.scientificName}
             </p>
           </CardHeader>
           <CardContent>
-            <div className="flex items-end gap-2">
-              <span className="text-4xl font-bold tracking-tight sm:text-5xl">
+            <div className="flex items-end gap-2 flex-wrap">
+              <span className="text-3xl font-bold tracking-tight sm:text-5xl">
                 {formatNumber(result.seedCount)}
               </span>
-              <span className="pb-1 text-lg text-emerald-50/90">ekor</span>
+              <span className="pb-1 text-base sm:text-lg text-emerald-50/90">ekor</span>
             </div>
             <p className="mt-1 text-sm text-emerald-50/80">
               Untuk {isKja ? "KJA" : "kolam"} {result.dimensions} (
@@ -291,7 +291,7 @@ export function ResultTabs({
         {/* === Tab: Ringkasan === */}
         <TabsContent value="summary" className="space-y-4 mt-3">
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-            <Card className="border-border/60 shadow-sm">
+            <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                   <Sparkles className="h-5 w-5 text-emerald-600" />
@@ -337,14 +337,14 @@ export function ResultTabs({
           </motion.div>
 
           {/* Info ikan & sistem */}
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card className="border-border/60">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Card className="border-border/60 transition-shadow hover:shadow-md">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <span className="text-lg">{result.fish.emoji}</span>
                   Tentang {result.fish.name}
                 </CardTitle>
-                <p className="text-[10px] italic text-muted-foreground">
+                <p className="text-[11px] italic text-muted-foreground">
                   {result.fish.scientificName}
                 </p>
               </CardHeader>
@@ -360,7 +360,7 @@ export function ResultTabs({
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-border/60">
+            <Card className="border-border/60 transition-shadow hover:shadow-md">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <Droplets className="h-4 w-4 text-emerald-600" />
@@ -371,7 +371,7 @@ export function ResultTabs({
                 <p className="text-xs text-muted-foreground">{selectedSystem.description}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedSystem.pros.map((pro, i) => (
-                    <Badge key={i} variant="outline" className="text-[10px] font-normal">{pro}</Badge>
+                    <Badge key={i} variant="outline" className="text-[11px] font-normal">{pro}</Badge>
                   ))}
                 </div>
               </CardContent>
@@ -389,7 +389,7 @@ export function ResultTabs({
               <StatCard icon={<Sparkles className="h-5 w-5" />} label="Pertambahan Biomassa" value={`${fmtDec(Math.max(0, result.harvestBiomassKg - result.initialBiomassKg), 1)} kg`} sublabel="Selama siklus budidaya" tone="amber" />
             </div>
 
-            <Card className="border-border/60 mt-4">
+            <Card className="border-border/60 mt-4 transition-shadow hover:shadow-md">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm">Rincian Produksi</CardTitle>
               </CardHeader>
@@ -441,7 +441,7 @@ export function ResultTabs({
               </Alert>
             )}
 
-            <Card className="border-emerald-200 bg-emerald-50/40 dark:border-emerald-900/50 dark:bg-emerald-950/20 mt-4">
+            <Card className="border-emerald-200 bg-emerald-50/40 dark:border-emerald-900/50 dark:bg-emerald-950/20 mt-4 transition-shadow hover:shadow-md">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <Beaker className="h-4 w-4 text-emerald-600" />
@@ -456,12 +456,12 @@ export function ResultTabs({
                   <div className="rounded-md bg-sky-50 p-2.5 text-center dark:bg-sky-950/30">
                     <Badge className="mb-1 bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300">Starter (Hari 1-{result.starterDays})</Badge>
                     <p className="text-sm font-bold">{fmtDec(result.starterFeedKg, 1)} kg</p>
-                    <p className="text-[10px] text-muted-foreground">Protein SNI {result.proteinRangeStarter[0]}-{result.proteinRangeStarter[1]}%</p>
+                    <p className="text-[11px] text-muted-foreground">Protein SNI {result.proteinRangeStarter[0]}-{result.proteinRangeStarter[1]}%</p>
                   </div>
                   <div className="rounded-md bg-emerald-50 p-2.5 text-center dark:bg-emerald-950/30">
                     <Badge className="mb-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Grower (Hari {result.starterDays + 1}-{result.starterDays + result.growerDays})</Badge>
                     <p className="text-sm font-bold">{fmtDec(result.growerFeedKg, 1)} kg</p>
-                    <p className="text-[10px] text-muted-foreground">Protein user {result.proteinPercent}%</p>
+                    <p className="text-[11px] text-muted-foreground">Protein user {result.proteinPercent}%</p>
                   </div>
                 </div>
                 <div className="space-y-1 text-xs">
@@ -525,7 +525,7 @@ export function ResultTabs({
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
             <WaterQualityForm fish={selectedFish} />
 
-            <Card className="border-border/60 mt-4">
+            <Card className="border-border/60 mt-4 transition-shadow hover:shadow-md">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <Box className="h-4 w-4 text-emerald-600" />
@@ -577,9 +577,9 @@ function Row({
   highlight?: boolean;
 }) {
   return (
-    <div className="flex justify-between gap-3">
-      <span className="text-muted-foreground">{label}</span>
-      <span className={`text-right font-medium ${highlight ? "font-bold text-emerald-700 dark:text-emerald-400" : ""}`}>
+    <div className="flex justify-between gap-2 text-xs sm:text-sm sm:gap-3">
+      <span className="shrink-0 text-muted-foreground">{label}</span>
+      <span className={`text-right font-medium break-words min-w-0 ${highlight ? "font-bold text-emerald-700 dark:text-emerald-400" : ""}`}>
         {value}
       </span>
     </div>
@@ -607,14 +607,14 @@ function StatCard({
   };
 
   return (
-    <Card className="border-border/60 shadow-sm">
+    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
             <p className="text-xs font-medium text-muted-foreground">{label}</p>
             <p className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">{value}</p>
             {sublabel && (
-              <p className="mt-0.5 truncate text-[11px] text-muted-foreground">{sublabel}</p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground line-clamp-2">{sublabel}</p>
             )}
           </div>
           <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${toneClasses[tone]}`}>

@@ -678,7 +678,7 @@ Volume (liter) = Volume (m³) × 1000"
                           </TableCell>
                           <TableCell className="text-xs text-center font-mono whitespace-nowrap">
                             {wq.doRange[0]}–{wq.doRange[1]}
-                            <div className="text-[9px] text-red-600 dark:text-red-400">
+                            <div className="text-[10px] text-red-600 dark:text-red-400">
                               kritis &lt;{wq.doCritical}
                             </div>
                           </TableCell>
@@ -687,7 +687,7 @@ Volume (liter) = Volume (m³) × 1000"
                           </TableCell>
                           <TableCell className="text-xs text-center font-mono whitespace-nowrap">
                             ≤{wq.ammoniaMax}
-                            <div className="text-[9px] text-red-600 dark:text-red-400">
+                            <div className="text-[10px] text-red-600 dark:text-red-400">
                               kritis &gt;{wq.ammoniaCritical}
                             </div>
                           </TableCell>

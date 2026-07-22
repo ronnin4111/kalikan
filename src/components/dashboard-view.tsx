@@ -7,6 +7,7 @@ import {
   Wheat,
   ArrowRight,
   TrendingUp,
+  Calculator,
 } from "lucide-react";
 import { FISH_SPECIES, type FishSpecies } from "@/lib/fish-data";
 import { DeveloperInfo } from "@/components/developer-info";
@@ -95,66 +96,27 @@ export function DashboardView({ onSelectFish }: DashboardViewProps) {
           />
         </motion.div>
 
-        {/* ===== Bottom: 5 Ikan Clickable ===== */}
+        {/* ===== CTA: Mulai Hitung ===== */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-8 flex-1"
+          className="mt-8 flex flex-1 flex-col items-center justify-center gap-4"
         >
-          <div className="mb-3 flex items-center justify-between px-1">
-            <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-300 sm:text-base">
-              <Fish className="h-4 w-4 text-cyan-400" />
-              Pilih Jenis Ikan
-            </h2>
-            <span className="text-[10px] text-slate-400 sm:text-xs">
-              Klik untuk mulai hitung →
-            </span>
-          </div>
-
-          {/* Bar ikan — clickable. 11 ikan → grid 3-4 cols (mobile 3 cols) */}
-          <div className="grid grid-cols-3 gap-2 rounded-2xl bg-blue-950/60 p-3 ring-1 ring-cyan-500/20 backdrop-blur sm:grid-cols-4 sm:gap-3 sm:p-4 lg:grid-cols-4">
-            {FISH_SPECIES.map((fish, idx) => (
-              <motion.button
-                key={fish.id}
-                type="button"
-                onClick={() => onSelectFish(fish)}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + idx * 0.05, type: "spring" }}
-                whileHover={{ y: -3, scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative flex min-h-[4.5rem] flex-col items-center gap-0.5 overflow-hidden rounded-md bg-gradient-to-b from-white/5 to-white/0 px-1 py-1.5 transition-all hover:bg-white/10 hover:ring-1 hover:ring-cyan-400/50 sm:px-1.5 sm:py-2"
-                aria-label={`Hitung padat tebar untuk ${fish.name} (${fish.scientificName})`}
-                title={`${fish.name} — ${fish.scientificName}`}
-              >
-                {/* Fish illustration */}
-                <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded bg-white/95 sm:h-12 sm:w-12">
-                  <img
-                    src={fish.image}
-                    alt={`Ikan ${fish.name}`}
-                    className="h-full w-full object-contain p-0.5 transition-transform duration-300 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Nama ikan */}
-                <p className="text-[10px] font-bold leading-tight text-white sm:text-[11px]">
-                  {fish.name}
-                </p>
-
-                {/* Nama latin (italic, kecil) */}
-                <p className="text-[8px] italic leading-tight text-slate-400 sm:text-[9px] line-clamp-1">
-                  {fish.scientificName}
-                </p>
-
-                {/* Arrow indicator */}
-                <div className="absolute right-0.5 top-0.5 rounded-full bg-cyan-500/0 p-0.5 text-cyan-400 opacity-0 transition-all group-hover:bg-cyan-500/20 group-hover:opacity-100">
-                  <ArrowRight className="h-2.5 w-2.5" />
-                </div>
-              </motion.button>
-            ))}
-          </div>
+          <motion.button
+            type="button"
+            onClick={() => onSelectFish(FISH_SPECIES[0])}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-cyan-500 px-8 py-4 text-lg font-bold shadow-lg shadow-emerald-500/30 transition-all hover:shadow-xl hover:shadow-emerald-500/40 sm:px-10 sm:py-5 sm:text-xl"
+          >
+            <Calculator className="h-6 w-6 sm:h-7 sm:w-7" />
+            Mulai Hitung
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1 sm:h-6 sm:w-6" />
+          </motion.button>
+          <p className="text-center text-xs text-slate-400 sm:text-sm">
+            Pilih jenis ikan & sistem budidaya langsung di halaman kalkulator
+          </p>
         </motion.div>
 
         {/* ===== Developer Info + Footer hint ===== */}
@@ -170,7 +132,7 @@ export function DashboardView({ onSelectFish }: DashboardViewProps) {
           <p className="text-center text-[10px] text-slate-500 sm:text-xs">
             Kalikan · PWA · Bekerja offline · Berdasarkan standar SNI & KKP Indonesia
           </p>
-          <p className="text-center text-[9px] text-slate-600 sm:text-[10px]">
+          <p className="text-center text-[10px] text-slate-600 sm:text-xs">
             📱 Install sebagai PWA untuk akses cepat dari home screen
           </p>
         </motion.div>
@@ -207,7 +169,7 @@ function FeaturePanel({
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-xs font-bold text-white sm:text-sm">{title}</p>
-        <p className="truncate text-[10px] text-slate-300 sm:text-xs">{desc}</p>
+        <p className="truncate text-[11px] text-slate-300 sm:text-xs">{desc}</p>
       </div>
     </div>
   );

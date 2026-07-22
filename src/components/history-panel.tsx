@@ -133,7 +133,7 @@ export function HistoryPanel({ onLoad }: HistoryPanelProps) {
           <History className="h-4 w-4" />
           <span className="hidden sm:inline">Riwayat</span>
           {entries.length > 0 && (
-            <Badge variant="secondary" className="ml-0.5 text-[9px]">
+            <Badge variant="secondary" className="ml-0.5 text-[10px]">
               {entries.length}
             </Badge>
           )}
@@ -193,7 +193,7 @@ export function HistoryPanel({ onLoad }: HistoryPanelProps) {
                             <span className="text-sm font-semibold">
                               {fish.emoji} {fish.name}
                             </span>
-                            <Badge variant="outline" className="text-[9px]">
+                            <Badge variant="outline" className="text-[10px]">
                               {system.name.split(" ")[0]}
                             </Badge>
                           </div>
@@ -230,7 +230,7 @@ export function HistoryPanel({ onLoad }: HistoryPanelProps) {
                           </p>
                         </div>
                       </div>
-                      <p className="mt-2 flex items-center gap-1 text-[9px] text-muted-foreground">
+                      <p className="mt-2 flex items-center gap-1 text-[10px] text-muted-foreground">
                         <Clock className="h-2.5 w-2.5" />
                         {timeAgo(entry.timestamp)} · {entry.cycleDays} hari siklus
                       </p>

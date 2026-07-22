@@ -85,21 +85,21 @@ export function WeeklyFeedTable({
         </CardHeader>
         <CardContent className="space-y-3">
           {/* Summary per fase */}
-          <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-md bg-sky-50 p-2 text-center dark:bg-sky-950/30">
-              <Badge className={`mb-1 ${phaseColors.starter}`}>Starter</Badge>
-              <p className="text-sm font-bold text-foreground">{formatRp(totalStarterKg)} kg</p>
-              <p className="text-[10px] text-muted-foreground">Fase benih</p>
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+            <div className="rounded-md bg-sky-50 p-1.5 sm:p-2 text-center dark:bg-sky-950/30">
+              <Badge className={`mb-0.5 sm:mb-1 ${phaseColors.starter} text-[10px] sm:text-[11px]`}>Starter</Badge>
+              <p className="text-xs sm:text-sm font-bold text-foreground">{formatRp(totalStarterKg)} kg</p>
+              <p className="text-[10px] sm:text-[11px] text-muted-foreground">Fase benih</p>
             </div>
-            <div className="rounded-md bg-emerald-50 p-2 text-center dark:bg-emerald-950/30">
-              <Badge className={`mb-1 ${phaseColors.grower}`}>Grower</Badge>
-              <p className="text-sm font-bold text-foreground">{formatRp(totalGrowerKg)} kg</p>
-              <p className="text-[10px] text-muted-foreground">Fase pembesaran</p>
+            <div className="rounded-md bg-emerald-50 p-1.5 sm:p-2 text-center dark:bg-emerald-950/30">
+              <Badge className={`mb-0.5 sm:mb-1 ${phaseColors.grower} text-[10px] sm:text-[11px]`}>Grower</Badge>
+              <p className="text-xs sm:text-sm font-bold text-foreground">{formatRp(totalGrowerKg)} kg</p>
+              <p className="text-[10px] sm:text-[11px] text-muted-foreground">Fase pembesaran</p>
             </div>
-            <div className="rounded-md bg-amber-50 p-2 text-center dark:bg-amber-950/30">
-              <Badge className={`mb-1 ${phaseColors.finisher}`}>Finisher</Badge>
-              <p className="text-sm font-bold text-foreground">{formatRp(totalFinisherKg)} kg</p>
-              <p className="text-[10px] text-muted-foreground">Fase akhir</p>
+            <div className="rounded-md bg-amber-50 p-1.5 sm:p-2 text-center dark:bg-amber-950/30">
+              <Badge className={`mb-0.5 sm:mb-1 ${phaseColors.finisher} text-[10px] sm:text-[11px]`}>Finisher</Badge>
+              <p className="text-xs sm:text-sm font-bold text-foreground">{formatRp(totalFinisherKg)} kg</p>
+              <p className="text-[10px] sm:text-[11px] text-muted-foreground">Fase akhir</p>
             </div>
           </div>
 
@@ -128,7 +128,7 @@ export function WeeklyFeedTable({
                     <TableCell className="text-center whitespace-nowrap">
                       <Badge
                         variant="outline"
-                        className={`text-[9px] ${phaseColors[w.phase]}`}
+                        className={`text-[10px] ${phaseColors[w.phase]}`}
                       >
                         {phaseLabels[w.phase]}
                       </Badge>

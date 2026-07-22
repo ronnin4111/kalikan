@@ -224,29 +224,29 @@ export function ProfitCalculator({
 
           {/* Profit highlight */}
           <div
-            className={`rounded-lg p-4 ${
+            className={`rounded-lg p-3 sm:p-4 ${
               isProfit
                 ? "bg-gradient-to-br from-emerald-500 to-teal-600 text-white"
                 : "bg-gradient-to-br from-red-500 to-rose-700 text-white"
             } shadow-md`}
           >
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
                 <p className="text-xs uppercase tracking-wide opacity-80">
                   {isProfit ? "Laba Bersih" : "Kerugian"}
                 </p>
-                <p className="mt-1 text-3xl font-bold sm:text-4xl">
+                <p className="mt-1 text-2xl font-bold sm:text-4xl">
                   {isProfit ? "+" : "-"}Rp {formatRp(Math.abs(profit.profit))}
                 </p>
-                <p className="mt-1 text-xs opacity-80">
+                <p className="mt-1 text-[11px] sm:text-xs opacity-80">
                   Margin: {profit.profitMargin}% · ROR: {profit.ror}%
                 </p>
               </div>
               <div className="shrink-0">
                 {isProfit ? (
-                  <TrendingUp className="h-10 w-10 opacity-80" />
+                  <TrendingUp className="h-8 w-8 sm:h-10 sm:w-10 opacity-80" />
                 ) : (
-                  <TrendingDown className="h-10 w-10 opacity-80" />
+                  <TrendingDown className="h-8 w-8 sm:h-10 sm:w-10 opacity-80" />
                 )}
               </div>
             </div>
@@ -254,7 +254,7 @@ export function ProfitCalculator({
 
           {/* Break-even */}
           <div className="rounded-md border border-border/60 bg-muted/30 p-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="flex items-center gap-1.5 text-xs font-medium">
                   <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
@@ -264,7 +264,7 @@ export function ProfitCalculator({
                   Harga minimum agar tidak rugi
                 </p>
               </div>
-              <p className="text-base font-bold text-emerald-700 dark:text-emerald-400">
+              <p className="text-sm sm:text-base font-bold text-emerald-700 dark:text-emerald-400">
                 Rp {formatRp(profit.breakevenPricePerKg)}/kg
               </p>
             </div>
@@ -327,12 +327,12 @@ function ResultRow({
     slate: "bg-slate-50 text-slate-700 dark:bg-slate-950/30 dark:text-slate-300",
   };
   return (
-    <div className={`flex items-center justify-between rounded-md p-2.5 ${tones[tone]}`}>
-      <div className="flex items-center gap-2">
+    <div className={`flex items-center justify-between gap-2 rounded-md p-2.5 ${tones[tone]}`}>
+      <div className="flex items-center gap-2 min-w-0">
         {icon}
-        <span className={`text-xs ${bold ? "font-bold" : "font-medium"}`}>{label}</span>
+        <span className={`text-xs ${bold ? "font-bold" : "font-medium"} shrink-0`}>{label}</span>
       </div>
-      <span className={`text-sm font-mono ${bold ? "font-bold" : "font-semibold"}`}>
+      <span className={`text-xs sm:text-sm font-mono ${bold ? "font-bold" : "font-semibold"} break-all text-right min-w-0`}>
         {value}
       </span>
     </div>

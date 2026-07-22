@@ -314,12 +314,12 @@ function ParamRow({
   };
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <Label className="flex items-center gap-1.5 text-xs">
+      <div className="flex items-center justify-between gap-2">
+        <Label className="flex items-center gap-1.5 text-xs min-w-0">
           {icon}
-          {label}
+          <span className="truncate">{label}</span>
         </Label>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 shrink-0">
           <Input
             type="number"
             min={min}
@@ -327,7 +327,7 @@ function ParamRow({
             step={step}
             value={value}
             onChange={(e) => onChange(Number(e.target.value))}
-            className="h-7 w-20 text-right text-xs"
+            className="h-7 w-16 sm:w-20 text-right text-xs"
           />
           {unit && <span className="text-[10px] text-muted-foreground">{unit}</span>}
         </div>
@@ -344,7 +344,7 @@ function ParamRow({
           Optimal: {range[0]}–{range[1]} {unit}
         </p>
         {warning && message && (
-          <Badge variant="outline" className={`gap-1 text-[9px] ${colorClasses[color]}`}>
+          <Badge variant="outline" className={`gap-1 text-[10px] ${colorClasses[color]}`}>
             <AlertTriangle className="h-2.5 w-2.5" />
             {warning ? "Warning" : "OK"}
           </Badge>
@@ -367,7 +367,7 @@ function RangeItem({
     <div className="flex flex-col gap-0.5">
       <span className="text-muted-foreground">{label}</span>
       <span className="font-mono font-medium text-foreground">{range}</span>
-      <span className="text-[9px] text-red-600 dark:text-red-400">Kritis: {critical}</span>
+      <span className="text-[10px] text-red-600 dark:text-red-400">Kritis: {critical}</span>
     </div>
   );
 }

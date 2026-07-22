@@ -254,22 +254,22 @@ function TimelineRow({
   };
   return (
     <div
-      className={`flex items-center gap-3 rounded-md border p-2.5 ${tones[tone]} ${big ? "shadow-md" : ""}`}
+      className={`flex items-start gap-2 sm:gap-3 rounded-md border p-2 sm:p-2.5 ${tones[tone]} ${big ? "shadow-md" : ""}`}
     >
-      <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/60 dark:bg-white/10`}>
+      <div className={`flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-md bg-white/60 dark:bg-white/10`}>
         {icon}
       </div>
       <div className="min-w-0 flex-1">
-        <p className={`text-xs font-semibold ${big ? "text-base sm:text-lg" : ""}`}>
+        <p className={`text-xs font-semibold ${big ? "text-sm sm:text-lg" : ""}`}>
           {label}
         </p>
         {sub && (
-          <p className="text-[10px] text-muted-foreground mt-0.5">{sub}</p>
+          <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">{sub}</p>
         )}
         <p className="text-[10px] text-muted-foreground">{phase}</p>
       </div>
       <div className="shrink-0 text-right">
-        <p className={`font-mono font-semibold ${big ? "text-base" : "text-xs"}`}>
+        <p className={`font-mono font-semibold ${big ? "text-xs sm:text-base" : "text-[11px] sm:text-xs"}`}>
           {formatDate(date)}
         </p>
       </div>

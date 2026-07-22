@@ -72,7 +72,6 @@ import {
 } from "@/components/ui/collapsible";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ReferenceDialog } from "@/components/reference-dialog";
-import { FishCard } from "@/components/fish-card";
 import { DashboardView } from "@/components/dashboard-view";
 import { DeveloperInfo } from "@/components/developer-info";
 import { WeeklyFeedTable } from "@/components/weekly-feed-table";
@@ -696,7 +695,9 @@ export default function Home() {
         </Sheet>
 
         {/* ===== Hero ===== */}
-        <section className="border-b border-border/40 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent">
+        <section className="relative border-b border-border/40 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent overflow-hidden">
+          {/* Subtle decorative pattern */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '24px 24px' }} />
           <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
             <div className="max-w-3xl">
               <Badge className="mb-2 gap-1 bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-300 sm:mb-3">
@@ -716,7 +717,7 @@ export default function Home() {
               </p>
 
               {/* 3 Fitur utama */}
-              <div className="mt-3 grid grid-cols-1 gap-2 sm:mt-5 sm:grid-cols-3 sm:gap-3">
+              <div className="mt-3 grid grid-cols-3 gap-2 sm:mt-5 sm:gap-3">
                 <FeatureItem
                   icon={<Fish className="h-4 w-4" />}
                   title="Padat Tebar Akurat"
@@ -737,45 +738,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ===== Dashboard: Pilih Ikan ===== */}
-        <section className="border-b border-border/40 bg-gradient-to-b from-background to-muted/30">
-          <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
-            <div className="mb-3 flex items-center justify-between gap-2 sm:mb-4">
-              <div>
-                <h3 className="flex items-center gap-2 text-sm font-semibold sm:text-base md:text-lg">
-                  <Fish className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
-                  Pilih Jenis Ikan
-                </h3>
-                <p className="text-[10px] text-muted-foreground sm:text-xs">
-                  Klik kartu ikan untuk memulai perhitungan
-                </p>
-              </div>
-              {selectedFish && (
-                <Badge
-                  className={`gap-1 bg-gradient-to-r ${selectedFish.accentColor} text-white hover:opacity-90 text-[10px] sm:text-xs`}
-                >
-                  {selectedFish.emoji} {selectedFish.name} terpilih
-                </Badge>
-              )}
-            </div>
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
-              {FISH_SPECIES.map((fish) => (
-                <FishCard
-                  key={fish.id}
-                  fish={fish}
-                  selected={fishId === fish.id}
-                  onClick={() => handleFishChangeSync(fish.id)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ===== Main content ===== */}
         <main className="mx-auto w-full max-w-7xl flex-1 px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
           {/* Banner ikan terpilih — compact on mobile */}
           <div
-            className={`mb-4 overflow-hidden rounded-xl border-2 border-transparent bg-gradient-to-r ${selectedFish.accentColor} p-0.5 shadow-md sm:mb-6`}
+            className={`mb-4 overflow-hidden rounded-xl border-2 border-transparent bg-gradient-to-r ${selectedFish.accentColor} p-0.5 shadow-md transition-shadow hover:shadow-lg sm:mb-6`}
           >
             <div className="flex items-center gap-2 rounded-[10px] bg-background/95 p-2.5 backdrop-blur sm:gap-3 sm:p-4">
               <div
@@ -788,13 +755,13 @@ export default function Home() {
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-[9px] font-medium uppercase tracking-wide text-muted-foreground sm:text-[10px]">
+                <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground sm:text-xs">
                   Sedang menghitung untuk
                 </p>
                 <p className="text-sm font-bold tracking-tight sm:text-lg">
                   {selectedFish.emoji} {selectedFish.name}
                 </p>
-                <p className="truncate text-[10px] text-muted-foreground sm:text-xs">
+                <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
                   {selectedFish.description}
                 </p>
               </div>
@@ -815,10 +782,10 @@ export default function Home() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="mb-3 w-full justify-between gap-2 text-xs font-medium"
+                    className="mb-3 w-full justify-between gap-2 bg-gradient-to-r from-emerald-50 to-teal-50 font-semibold text-emerald-700 border-emerald-200 hover:bg-emerald-100 hover:text-emerald-800 dark:from-emerald-950/40 dark:to-teal-950/40 dark:text-emerald-300 dark:border-emerald-800 dark:hover:bg-emerald-950/60"
                   >
                     <span className="flex items-center gap-2">
-                      <Calculator className="h-4 w-4 text-emerald-600" />
+                      <Calculator className="h-4 w-4" />
                       Parameter Input
                     </span>
                     {inputExpanded ? (
@@ -831,7 +798,7 @@ export default function Home() {
                 <CollapsibleContent>
                   <div className="space-y-4">
                     {/* Card 1: Bentuk & Ukuran Kolam */}
-                    <Card className="border-border/60 shadow-sm">
+                    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                       <CardHeader className="pb-3 sm:pb-4">
                         <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
                           <Ruler className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
@@ -863,7 +830,7 @@ export default function Home() {
                               <Square className="h-4 w-4" />
                               <div className="text-left">
                                 <div className="text-xs font-semibold">Persegi</div>
-                                <div className="text-[10px] opacity-80">Panjang × Lebar</div>
+                                <div className="text-[11px] opacity-80">Panjang × Lebar</div>
                               </div>
                             </Button>
                             <Button
@@ -881,12 +848,12 @@ export default function Home() {
                               <Circle className="h-4 w-4" />
                               <div className="text-left">
                                 <div className="text-xs font-semibold">Bulat</div>
-                                <div className="text-[10px] opacity-80">Diameter</div>
+                                <div className="text-[11px] opacity-80">Diameter</div>
                               </div>
                             </Button>
                           </div>
                           {isKja && (
-                            <p className="text-[10px] text-muted-foreground">
+                            <p className="text-[11px] text-muted-foreground">
                               KJA umumnya berbentuk persegi (jaring kotak).
                             </p>
                           )}
@@ -967,7 +934,7 @@ export default function Home() {
                             onChange={(e) => setDepth(e.target.value)}
                             placeholder="1"
                           />
-                          <p className="text-[10px] text-muted-foreground">
+                          <p className="text-[11px] text-muted-foreground">
                             Rekomendasi {selectedSystem.name}: {selectedSystem.depthRange[0]}-
                             {selectedSystem.depthRange[1]} m
                           </p>
@@ -994,7 +961,7 @@ export default function Home() {
                                 </span>
                                 <span className="text-sm font-bold text-emerald-700 dark:text-emerald-300">
                                   {formatNumber(result.volume, 2)} m³
-                                  <span className="ml-1 text-[10px] font-normal">
+                                  <span className="ml-1 text-[11px] font-normal">
                                     ({formatNumber(result.waterVolumeLiter, 0)} L)
                                   </span>
                                 </span>
@@ -1009,7 +976,7 @@ export default function Home() {
                                 </span>
                                 <span className="text-xs font-semibold text-sky-700 dark:text-sky-300">
                                   {formatNumber(result.dailyWaterChangeLiter, 0)} L
-                                  <span className="ml-1 text-[10px] font-normal">
+                                  <span className="ml-1 text-[11px] font-normal">
                                     ({result.waterExchangeRate[0]}-{result.waterExchangeRate[1]}%)
                                   </span>
                                 </span>
@@ -1017,7 +984,7 @@ export default function Home() {
                             )}
                             {isKja && (
                               <div className="rounded-md bg-sky-50 px-3 py-2 dark:bg-sky-950/30">
-                                <p className="text-[10px] text-sky-700 dark:text-sky-300">
+                                <p className="text-[11px] text-sky-700 dark:text-sky-300">
                                   💧 KJA: Air mengalir kontinyu dari arus sungai — tidak perlu penggantian manual.
                                 </p>
                               </div>
@@ -1028,7 +995,7 @@ export default function Home() {
                     </Card>
 
                     {/* Card 2: Jenis Ikan & Sistem */}
-                    <Card className="border-border/60 shadow-sm">
+                    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                       <CardHeader className="pb-3 sm:pb-4">
                         <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
                           <Fish className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
@@ -1121,11 +1088,17 @@ export default function Home() {
                             className="py-1"
                           />
                           <div className="flex justify-between text-[10px] text-muted-foreground">
-                            <span>
+                            <span className="hidden sm:inline">
                               Min rekomendasi: {densityRange[0]} ekor/{capacityUnit}
                             </span>
-                            <span>
+                            <span className="sm:hidden">
+                              Min: {densityRange[0]}
+                            </span>
+                            <span className="hidden sm:inline">
                               Maks rekomendasi: {densityRange[1]} ekor/{capacityUnit}
+                            </span>
+                            <span className="sm:hidden">
+                              Maks: {densityRange[1]}
                             </span>
                           </div>
                         </div>
@@ -1133,7 +1106,7 @@ export default function Home() {
                     </Card>
 
                     {/* Card 3: Parameter Produksi */}
-                    <Card className="border-border/60 shadow-sm">
+                    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                       <CardHeader className="pb-3 sm:pb-4">
                         <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
                           <TrendingUp className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
@@ -1170,7 +1143,7 @@ export default function Home() {
                             step={selectedFish.seedSizeRange[1] < 1 ? 0.001 : selectedFish.seedSizeRange[1] < 10 ? 0.1 : 0.5}
                             onValueChange={(v) => setSeedSize(v[0])}
                           />
-                          <p className="text-[10px] text-muted-foreground">
+                          <p className="text-[11px] text-muted-foreground">
                             ≈ {formatNumber(weightToLength(seedSize, selectedFish), 1)} cm panjang total
                             (min {selectedFish.seedSizeRange[0]}g ≈ 5 cm)
                           </p>
@@ -1191,7 +1164,7 @@ export default function Home() {
                             step={10}
                             onValueChange={(v) => setHarvestSize(v[0])}
                           />
-                          <p className="text-[10px] text-muted-foreground">
+                          <p className="text-[11px] text-muted-foreground">
                             ≈ {formatNumber(weightToLength(harvestSize, selectedFish), 1)} cm panjang total
                             (maks {selectedFish.harvestSizeRange[1]} g)
                           </p>
@@ -1261,12 +1234,13 @@ export default function Home() {
                             onValueChange={(v) => setFcr(v[0] / 100)}
                           />
                           <div className="flex justify-between text-[10px] text-muted-foreground">
-                            <span>0.8 (sangat efisien)</span>
+                            <span className="hidden sm:inline">0.8 (sangat efisien)</span>
+                            <span className="sm:hidden">0.8</span>
                             <span>
-                              Rekomendasi {selectedFish.name}:{" "}
                               {selectedFish.fcrRange[0]}-{selectedFish.fcrRange[1]}
                             </span>
-                            <span>2.0 (kurang efisien)</span>
+                            <span className="hidden sm:inline">2.0 (kurang efisien)</span>
+                            <span className="sm:hidden">2.0</span>
                           </div>
                         </div>
 
@@ -1342,7 +1316,7 @@ export default function Home() {
               {/* Desktop: always visible input cards */}
               <div className="hidden lg:block space-y-6">
                 {/* Card 1: Bentuk & Ukuran Kolam */}
-                <Card className="border-border/60 shadow-sm">
+                <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                   <CardHeader className="pb-4">
                     <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                       <Ruler className="h-5 w-5 text-emerald-600" />
@@ -1539,7 +1513,7 @@ export default function Home() {
                 </Card>
 
                 {/* Card 2: Jenis Ikan & Sistem */}
-                <Card className="border-border/60 shadow-sm">
+                <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                   <CardHeader className="pb-4">
                     <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                       <Fish className="h-5 w-5 text-emerald-600" />
@@ -1644,7 +1618,7 @@ export default function Home() {
                 </Card>
 
                 {/* Card 3: Parameter Produksi */}
-                <Card className="border-border/60 shadow-sm">
+                <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                   <CardHeader className="pb-4">
                     <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                       <TrendingUp className="h-5 w-5 text-emerald-600" />
@@ -1932,7 +1906,7 @@ export default function Home() {
                     · Kalkulator Ikan · Budidaya perikanan Indonesia
                   </span>
                 </div>
-                <p className="max-w-md text-[10px] text-muted-foreground sm:text-[11px]">
+                <p className="max-w-md text-[11px] text-muted-foreground sm:text-xs">
                   Estimasi berdasarkan standar teknis budidaya. Hasil dapat bervariasi
                   tergantung kondisi lapangan.
                 </p>
@@ -1965,7 +1939,7 @@ function FeatureItem({
       </div>
       <div className="min-w-0">
         <p className="truncate text-[11px] font-semibold sm:text-xs">{title}</p>
-        <p className="truncate text-[10px] text-muted-foreground sm:text-[11px]">{desc}</p>
+        <p className="truncate text-[11px] text-muted-foreground sm:text-xs">{desc}</p>
       </div>
     </div>
   );
@@ -1993,7 +1967,7 @@ function StatCard({
   };
 
   return (
-    <Card className="border-border/60 shadow-sm">
+    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">

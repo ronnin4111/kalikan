@@ -63,7 +63,7 @@ export function FishCard({ fish, selected, onClick }: FishCardProps) {
       {/* Scientific name (latin) — italic, kecil */}
       <p
         className={cn(
-          "w-full truncate text-[8px] italic leading-tight sm:text-[9px]",
+          "w-full truncate text-[10px] italic leading-tight sm:text-[11px]",
           selected ? "text-white/80" : "text-muted-foreground"
         )}
       >
