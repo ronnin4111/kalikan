@@ -1,0 +1,72 @@
+{
+  "name": "Kalikan - Kalkulator Ikan & Padat Tebar",
+  "short_name": "Kalikan",
+  "description": "Hitung padat tebar ikan & estimasi produksi untuk kolam persegi, bulat, atau KJA Sungai. Mendukung 11 jenis ikan (lele, nila, patin, gurame, mas, vannamei, gabus, baung, nila merah, bawal air tawar, kakap putih) + profit Rp, kalender panen, jadwal pakan mingguan, kualitas air.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#059669",
+  "categories": ["productivity", "utilities", "business"],
+  "lang": "id",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kalkulator Lele",
+      "short_name": "Lele",
+      "description": "Buka kalkulator untuk ikan lele (Clarias gariepinus)",
+      "url": "/?fish=lele"
+    },
+    {
+      "name": "Kalkulator Nila",
+      "short_name": "Nila",
+      "description": "Buka kalkulator untuk ikan nila (Oreochromis niloticus)",
+      "url": "/?fish=nila"
+    },
+    {
+      "name": "Kalkulator Patin",
+      "short_name": "Patin",
+      "description": "Buka kalkulator untuk ikan patin (Pangasius hypophthalmus)",
+      "url": "/?fish=patin"
+    },
+    {
+      "name": "Kalkulator Vannamei",
+      "short_name": "Vannamei",
+      "description": "Buka kalkulator untuk udang vannamei (Litopenaeus vannamei)",
+      "url": "/?fish=vannamei"
+    },
+    {
+      "name": "Kalkulator Kakap Putih",
+      "short_name": "Kakap",
+      "description": "Buka kalkulator untuk ikan kakap putih (Lates calcarifer)",
+      "url": "/?fish=kakap-putih"
+    }
+  ]
+}

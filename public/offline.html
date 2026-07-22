@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kalikan - Offline</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#0f172a;color:#e2e8f0;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem}
+.box{text-align:center;max-width:440px;padding:2.5rem 1.75rem;border-radius:18px;background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);box-shadow:0 15px 40px rgba(0,0,0,.3);border:1px solid #1e3a5f}
+.logo{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,#10b981 0%,#0d9488 100%);margin-bottom:1rem;font-size:2rem;box-shadow:0 8px 20px rgba(16,185,129,.35)}
+h1{margin:0 0 .5rem;font-size:1.6rem;color:#34d399;font-weight:700}
+p{margin:.4rem 0;font-size:.92rem;color:#94a3b8;line-height:1.55}
+button{margin-top:1.25rem;padding:.7rem 1.5rem;border:0;border-radius:10px;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
+button:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(16,185,129,.4)}
+.tip{margin-top:1.5rem;padding:.85rem 1rem;border-radius:10px;background:#0f172a;border:1px solid #1e293b;font-size:.8rem;color:#64748b;text-align:left}
+.tip strong{color:#34d399;font-weight:600}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">🐟</div>
+  <h1>Anda sedang offline</h1>
+  <p>Kalikan tetap bisa dipakai untuk menghitung padat tebar ikan secara offline. Aplikasi sudah tersimpan di perangkat Anda.</p>
+  <button onclick="location.href='/'">Buka Kalikan</button>
+  <div class="tip">
+    <strong>Tip:</strong> Jika halaman tidak termuat, coba refresh beberapa saat lagi. Mode PWA memungkinkan Anda menghitung tanpa koneksi internet.
+  </div>
+</div>
+</body>
+</html>
