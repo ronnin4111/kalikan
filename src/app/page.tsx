@@ -24,6 +24,7 @@ import {
   Wallet,
   Activity,
   CalendarDays,
+  Share2,
 } from "lucide-react";
 import {
   Card,
@@ -71,7 +72,9 @@ import { DeveloperInfo } from "@/components/developer-info";
 
 import { HistoryPanel, type HistoryEntry } from "@/components/history-panel";
 import { CompareMode } from "@/components/compare-mode";
-import { ResultTabs } from "@/components/result-tabs";
+import { ResultTabs, type CalcResultData } from "@/components/result-tabs";
+import { ShareButtons } from "@/components/share-buttons";
+import { SaveScenarioButton } from "@/components/save-scenario-button";
 import {
   FISH_SPECIES,
   SYSTEMS,
@@ -607,7 +610,7 @@ export default function Home() {
           <div className="border-t border-border/40 bg-background/80 backdrop-blur">
             <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
               <div className="overflow-x-auto -mx-1 px-1 py-2">
-                <div className="flex gap-1 min-w-[480px] sm:min-w-0 sm:justify-center">
+                <div className="flex gap-1 min-w-[560px] sm:min-w-0 sm:justify-center">
                   <button
                     onClick={() => setResultTab("summary")}
                     className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
@@ -676,6 +679,18 @@ export default function Home() {
                     <CalendarDays className="h-3.5 w-3.5 shrink-0" />
                     <span className="hidden sm:inline">Kalender</span>
                     <span className="sm:hidden">Kal</span>
+                  </button>
+                  <button
+                    onClick={() => setResultTab("share")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "share"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <Share2 className="h-3.5 w-3.5 shrink-0" />
+                    <span className="hidden sm:inline">Bagikan</span>
+                    <span className="sm:hidden">Bagikan</span>
                   </button>
                 </div>
               </div>
@@ -796,6 +811,92 @@ export default function Home() {
               </Badge>
             </div>
           </div>
+
+          {/* ===== Rekomendasi Padat Tebar — always visible below fish banner ===== */}
+          {result && (
+            <div className="mb-4 sm:mb-6">
+              <Card className="overflow-hidden border-emerald-200 bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-md transition-shadow hover:shadow-lg dark:border-emerald-900">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <CardDescription className="text-emerald-50/90">
+                      Rekomendasi Padat Tebar
+                    </CardDescription>
+                    <Badge className="bg-white/20 text-white hover:bg-white/20">
+                      {selectedFish.emoji} {selectedFish.name} ·{" "}
+                      {selectedSystem.name.split(" ")[0]}
+                    </Badge>
+                  </div>
+                  <p className="mt-0.5 text-[11px] italic text-emerald-50/70">
+                    {selectedFish.scientificName}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-end gap-2 flex-wrap">
+                    <span className="text-3xl font-bold tracking-tight sm:text-5xl">
+                      {formatNumber(result.seedCount)}
+                    </span>
+                    <span className="pb-1 text-base sm:text-lg text-emerald-50/90">ekor</span>
+                  </div>
+                  <p className="mt-1 text-sm text-emerald-50/80">
+                    Untuk {isKja ? "KJA" : "kolam"} {result.dimensions} (
+                    {isKja && result.volume !== null
+                      ? `${formatNumber(result.volume, 2)} m³`
+                      : `${formatNumber(result.area, 2)} m²`}
+                    ) dengan padat tebar {result.densityUsed} ekor/{result.capacityUnit}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-emerald-50/90">
+                    <span>
+                      Rentang aman:{" "}
+                      <span className="font-semibold">
+                        {formatNumber(result.seedCountMin)}–
+                        {formatNumber(result.seedCountMax)} ekor
+                      </span>
+                    </span>
+                    <span>
+                      Estimasi panen:{" "}
+                      <span
+                        className={
+                          result.durationWarning ? "font-semibold text-amber-200" : "font-semibold"
+                        }
+                      >
+                        {formatNumber(result.cycleDays)} hari
+                      </span>
+                      <span className="ml-1 text-emerald-50/70">
+                        (standar {result.expectedDaysRange[0]}-{result.expectedDaysRange[1]} hari)
+                      </span>
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ===== Warnings (always visible) ===== */}
+              {(result.warning || result.durationWarning || result.depthWarning) && (
+                <div className="mt-3 space-y-2">
+                  {result.warning && (
+                    <Alert className="border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
+                      <AlertTriangle className="h-4 w-4" />
+                      <AlertTitle className="text-sm font-semibold">Padat Tebar Tidak Optimal</AlertTitle>
+                      <AlertDescription className="text-xs">{result.warningMessage}</AlertDescription>
+                    </Alert>
+                  )}
+                  {result.durationWarning && (
+                    <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
+                      <Clock className="h-4 w-4" />
+                      <AlertTitle className="text-sm font-semibold">Estimasi Durasi di Luar Standar</AlertTitle>
+                      <AlertDescription className="text-xs">{result.durationWarningMessage}</AlertDescription>
+                    </Alert>
+                  )}
+                  {result.depthWarning && (
+                    <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
+                      <Waves className="h-4 w-4" />
+                      <AlertTitle className="text-sm font-semibold">Kedalaman Air Tidak Ideal</AlertTitle>
+                      <AlertDescription className="text-xs">{result.depthWarningMessage}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
             {/* === Kolom Kiri: Input Tabs === */}
@@ -1340,45 +1441,6 @@ export default function Home() {
                 </Card>
               ) : (
                 <>
-                  {/* Warning */}
-                  {result.warning && (
-                    <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
-                      <AlertTriangle className="h-4 w-4" />
-                      <AlertTitle className="text-sm font-semibold">
-                        Perhatian
-                      </AlertTitle>
-                      <AlertDescription className="text-xs">
-                        {result.warningMessage}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-
-                  {/* Warning durasi budidaya di luar standar */}
-                  {result.durationWarning && (
-                    <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
-                      <Clock className="h-4 w-4" />
-                      <AlertTitle className="text-sm font-semibold">
-                        Estimasi Durasi di Luar Standar
-                      </AlertTitle>
-                      <AlertDescription className="text-xs">
-                        {result.durationWarningMessage}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-
-                  {/* Warning kedalaman air di luar range ideal */}
-                  {result.depthWarning && (
-                    <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
-                      <Waves className="h-4 w-4" />
-                      <AlertTitle className="text-sm font-semibold">
-                        Kedalaman Air Tidak Ideal
-                      </AlertTitle>
-                      <AlertDescription className="text-xs">
-                        {result.depthWarningMessage}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-
                   {/* === Tabbed Result Section === */}
                   <ResultTabs
                     result={result}

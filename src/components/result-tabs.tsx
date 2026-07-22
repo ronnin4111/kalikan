@@ -35,6 +35,7 @@ import {
   Info,
   CheckCircle2,
   Box,
+  Share2,
 } from "lucide-react";
 import {
   type FishSpecies,
@@ -50,6 +51,7 @@ import { GrowthChart } from "@/components/growth-chart";
 import { WeeklyFeedTable } from "@/components/weekly-feed-table";
 import { ShareButtons } from "@/components/share-buttons";
 import { SaveScenarioButton } from "@/components/save-scenario-button";
+
 
 export interface CalcResultData {
   area: number;
@@ -142,108 +144,6 @@ export function ResultTabs({
 
   return (
     <div className="space-y-4">
-      {/* ===== Hero Result Card (always visible, above tabs) ===== */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        <Card className="overflow-hidden border-emerald-200 bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-md transition-shadow hover:shadow-lg dark:border-emerald-900">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardDescription className="text-emerald-50/90">
-                Rekomendasi Padat Tebar
-              </CardDescription>
-              <Badge className="bg-white/20 text-white hover:bg-white/20">
-                {selectedFish.emoji} {selectedFish.name} ·{" "}
-                {selectedSystem.name.split(" ")[0]}
-              </Badge>
-            </div>
-            <p className="mt-0.5 text-[11px] italic text-emerald-50/70">
-              {selectedFish.scientificName}
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-end gap-2 flex-wrap">
-              <span className="text-3xl font-bold tracking-tight sm:text-5xl">
-                {formatNumber(result.seedCount)}
-              </span>
-              <span className="pb-1 text-base sm:text-lg text-emerald-50/90">ekor</span>
-            </div>
-            <p className="mt-1 text-sm text-emerald-50/80">
-              Untuk {isKja ? "KJA" : "kolam"} {result.dimensions} (
-              {isKja && result.volume !== null
-                ? `${formatNumber(result.volume, 2)} m³`
-                : `${formatNumber(result.area, 2)} m²`}
-              ) dengan padat tebar {result.densityUsed} ekor/{result.capacityUnit}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-emerald-50/90">
-              <span>
-                Rentang aman:{" "}
-                <span className="font-semibold">
-                  {formatNumber(result.seedCountMin)}–
-                  {formatNumber(result.seedCountMax)} ekor
-                </span>
-              </span>
-              <span>
-                Estimasi panen:{" "}
-                <span
-                  className={
-                    result.durationWarning ? "font-semibold text-amber-200" : "font-semibold"
-                  }
-                >
-                  {formatNumber(result.cycleDays)} hari
-                </span>
-                <span className="ml-1 text-emerald-50/70">
-                  (standar {result.expectedDaysRange[0]}-{result.expectedDaysRange[1]} hari)
-                </span>
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* ===== Warnings (always visible) ===== */}
-      <div className="space-y-2">
-        {result.warning && (
-          <Alert className="border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle className="text-sm font-semibold">Padat Tebar Tidak Optimal</AlertTitle>
-            <AlertDescription className="text-xs">{result.warningMessage}</AlertDescription>
-          </Alert>
-        )}
-        {result.durationWarning && (
-          <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
-            <Clock className="h-4 w-4" />
-            <AlertTitle className="text-sm font-semibold">Estimasi Durasi di Luar Standar</AlertTitle>
-            <AlertDescription className="text-xs">{result.durationWarningMessage}</AlertDescription>
-          </Alert>
-        )}
-        {result.depthWarning && (
-          <Alert className="border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
-            <Droplets className="h-4 w-4" />
-            <AlertTitle className="text-sm font-semibold">Kedalaman Air Tidak Ideal</AlertTitle>
-            <AlertDescription className="text-xs">{result.depthWarningMessage}</AlertDescription>
-          </Alert>
-        )}
-      </div>
-
-      {/* ===== Action buttons (Save + Share) ===== */}
-      <div className="flex flex-wrap items-center gap-2">
-        <SaveScenarioButton
-          result={result as any}
-          fishId={fishId}
-          systemId={systemId as any}
-          shape={shape}
-          compact
-        />
-        <ShareButtons
-          result={result as any}
-          fish={selectedFish}
-          systemName={selectedSystem.name}
-        />
-      </div>
-
       {/* ===== Main Tabs ===== */}
       {/* min-w-0 + overflow-hidden ensures the Tabs container cannot be widened
           by its inner content (e.g. Pakan tab's horizontal-scrollable tables). */}
@@ -518,6 +418,39 @@ export function ResultTabs({
               starterRatio={0.3}
               growerRatio={0.6}
             />
+          </motion.div>
+        </TabsContent>
+
+        {/* === Tab: Bagikan & Simpan === */}
+        <TabsContent value="share" className="space-y-4 mt-3">
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+            <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Share2 className="h-5 w-5 text-emerald-600" />
+                  Bagikan & Simpan Hasil
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Simpan skenario ini atau bagikan hasil perhitungan ke rekan budidaya
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <SaveScenarioButton
+                    result={result as any}
+                    fishId={fishId}
+                    systemId={systemId as any}
+                    shape={shape}
+                    compact
+                  />
+                  <ShareButtons
+                    result={result as any}
+                    fish={selectedFish}
+                    systemName={selectedSystem.name}
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </TabsContent>
       </Tabs>
