@@ -30,7 +30,7 @@ export function DashboardView({ onSelectFish }: DashboardViewProps) {
           <img
             src="/hero-banner.png"
             alt="Kalikan - Kalkulator Ikan untuk Budidaya Perikanan"
-            className="w-full max-h-48 object-cover sm:max-h-none"
+            className="w-full object-cover"
           />
         </motion.div>
 

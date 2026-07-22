@@ -59,3 +59,70 @@ Fixed mobile responsiveness issues and improved visual design across the Kalikan
 - ESLint: Passes with no errors
 - Dev server: Running on port 3000 without compilation errors
 - No functionality was removed or changed - only visual/styling improvements
+
+---
+
+## Task 2-3-4: Major Layout Restructuring
+
+**Agent**: Code Agent (Task 2-3-4)
+**Date**: 2025-01-XX
+
+### Summary
+Major restructuring of the Kalikan calculator app layout. Moved result tab navigation into the sticky header as a second row, combined three input cards into a single Tabs component (eliminating duplicate mobile/desktop code), removed the hero section entirely, and cleaned up unused imports/components.
+
+### Changes Made
+
+#### 1. Result Tabs Navigation → Sticky Header (`src/app/page.tsx`)
+- Added second row in the sticky header containing 6 result tab buttons: Ringkasan (Sparkles), Produksi (TrendingUp), Pakan (Wheat), Profit (Wallet), Kualitas Air (Activity), Kalender (CalendarDays)
+- Buttons use `resultTab` state for active/inactive styling with emerald color theme
+- Scrollable horizontally on mobile (`min-w-[480px] sm:min-w-0`), centered on desktop (`sm:justify-center`)
+- Short labels on mobile (Ringkas, Air, Kal) vs full labels on sm+ screens
+
+#### 2. Input Cards → Combined into Tab Group (`src/app/page.tsx`)
+- Removed Collapsible component entirely (was wrapping mobile-only input cards)
+- Removed `<div className="hidden lg:block space-y-6">` wrapper (desktop-only cards)
+- Created unified `<Tabs>` component with 3 TabsContent:
+  - Tab "kolam" (Ruler icon): Ukuran Kolam card
+  - Tab "ikan" (Fish icon): Ikan & Sistem Budidaya card
+  - Tab "parameter" (TrendingUp icon): Parameter Produksi card
+- Uses desktop version of card content (more readable) with responsive styling
+- Both mobile and desktop now use the same Tabs component — no duplicate code
+
+#### 3. Hero Section → Removed (`src/app/page.tsx`)
+- Removed entire hero section: heading "Hitung Padat Tebar Ikan, Akurat & Mudah", badge, description, and 3 FeatureItem cards
+- Fish info banner (gradient card showing selected fish) remains as the top element in main content
+
+#### 4. ResultTabs Component Update (`src/components/result-tabs.tsx`)
+- Removed `<TabsList>` with 6 `<TabsTrigger>` elements (navigation now in header)
+- Added `activeTab: string` and `onTabChange: (tab: string) => void` props to ResultTabsProps interface
+- Changed `<Tabs value={activeTab} onValueChange={onTabChange}>` to use parent-controlled state
+- Removed internal `useState("summary")` for activeTab and `useState` import
+- Removed unused icon imports: Wallet, CalendarDays, Activity
+- Removed unused component imports: TabsList, TabsTrigger from shadcn/ui/tabs
+
+#### 5. State Variable Changes (`src/app/page.tsx`)
+- Removed: `inputExpanded` state (was for Collapsible toggle, now unnecessary)
+- Added: `resultTab` state (default "summary") — controls ResultTabs from header
+- Added: `inputTab` state (default "kolam") — controls Input Tabs
+
+#### 6. Import Cleanup (`src/app/page.tsx`)
+- Removed imports: Collapsible, CollapsibleContent, CollapsibleTrigger, ChevronDown, ChevronUp, CardFooter, SheetClose, WeeklyFeedTable, GrowthChart, ProfitCalculator, WaterQualityForm, HarvestCalendar, ShareButtons, SaveScenarioButton
+- Added imports: Wallet, Activity, CalendarDays (for header tab nav icons)
+
+#### 7. Component Cleanup (`src/app/page.tsx`)
+- Removed: FeatureItem, StatCard, Row function components (all unused after restructuring)
+
+### File Size Impact
+- `page.tsx`: Reduced from ~2061 lines to ~1428 lines (~633 lines removed)
+- `result-tabs.tsx`: Reduced from ~628 lines to ~588 lines (~40 lines removed)
+
+### New Layout Structure
+- **Desktop**: Header (2 rows sticky) → Fish banner → 2-column grid (Input Tabs | Result Content) → Footer
+- **Mobile**: Header (2 rows sticky, row 2 scrollable) → Fish banner → Input Tabs → Result Content → Footer
+
+### Verification
+- ESLint: Passes with no errors
+- Dev server: Compiles successfully on port 3000
+- All calculator logic and functionality preserved
+- Footer still sticks to bottom with `mt-auto`
+- No compilation errors in dev.log

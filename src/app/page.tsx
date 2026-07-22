@@ -21,8 +21,9 @@ import {
   ArrowLeft,
   Clock,
   Menu,
-  ChevronDown,
-  ChevronUp,
+  Wallet,
+  Activity,
+  CalendarDays,
 } from "lucide-react";
 import {
   Card,
@@ -30,7 +31,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,24 +63,12 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetClose,
 } from "@/components/ui/sheet";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ReferenceDialog } from "@/components/reference-dialog";
 import { DashboardView } from "@/components/dashboard-view";
 import { DeveloperInfo } from "@/components/developer-info";
-import { WeeklyFeedTable } from "@/components/weekly-feed-table";
-import { GrowthChart } from "@/components/growth-chart";
-import { ProfitCalculator } from "@/components/profit-calculator";
-import { WaterQualityForm } from "@/components/water-quality-form";
-import { HarvestCalendar } from "@/components/harvest-calendar";
-import { ShareButtons } from "@/components/share-buttons";
-import { SaveScenarioButton } from "@/components/save-scenario-button";
+
 import { HistoryPanel, type HistoryEntry } from "@/components/history-panel";
 import { CompareMode } from "@/components/compare-mode";
 import { ResultTabs } from "@/components/result-tabs";
@@ -488,8 +476,9 @@ export default function Home() {
   // ---------- Mobile menu state ----------
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // ---------- Input collapsible state for mobile ----------
-  const [inputExpanded, setInputExpanded] = useState(true);
+  // ---------- Tab states ----------
+  const [resultTab, setResultTab] = useState("summary");
+  const [inputTab, setInputTab] = useState("kolam");
 
   const handleSelectFishFromDashboard = (fish: FishSpecies) => {
     handleFishChangeSync(fish.id);
@@ -613,6 +602,85 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* Sticky Result Tab Nav — Row 2 */}
+          <div className="border-t border-border/40 bg-background/80 backdrop-blur">
+            <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+              <div className="overflow-x-auto -mx-1 px-1 py-2">
+                <div className="flex gap-1 min-w-[480px] sm:min-w-0 sm:justify-center">
+                  <button
+                    onClick={() => setResultTab("summary")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "summary"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <Sparkles className="h-3.5 w-3.5 shrink-0" />
+                    <span className="hidden sm:inline">Ringkasan</span>
+                    <span className="sm:hidden">Ringkas</span>
+                  </button>
+                  <button
+                    onClick={() => setResultTab("production")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "production"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <TrendingUp className="h-3.5 w-3.5 shrink-0" />
+                    Produksi
+                  </button>
+                  <button
+                    onClick={() => setResultTab("feed")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "feed"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <Wheat className="h-3.5 w-3.5 shrink-0" />
+                    Pakan
+                  </button>
+                  <button
+                    onClick={() => setResultTab("profit")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "profit"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <Wallet className="h-3.5 w-3.5 shrink-0" />
+                    Profit
+                  </button>
+                  <button
+                    onClick={() => setResultTab("water")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "water"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <Activity className="h-3.5 w-3.5 shrink-0" />
+                    <span className="hidden sm:inline">Kualitas Air</span>
+                    <span className="sm:hidden">Air</span>
+                  </button>
+                  <button
+                    onClick={() => setResultTab("calendar")}
+                    className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                      resultTab === "calendar"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <CalendarDays className="h-3.5 w-3.5 shrink-0" />
+                    <span className="hidden sm:inline">Kalender</span>
+                    <span className="sm:hidden">Kal</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </header>
 
         {/* ===== Mobile Sheet Menu ===== */}
@@ -694,50 +762,6 @@ export default function Home() {
           </SheetContent>
         </Sheet>
 
-        {/* ===== Hero ===== */}
-        <section className="relative border-b border-border/40 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent overflow-hidden">
-          {/* Subtle decorative pattern */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-          <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-            <div className="max-w-3xl">
-              <Badge className="mb-2 gap-1 bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-300 sm:mb-3">
-                <Calculator className="h-3 w-3" />
-                Kalkulator Ikan
-              </Badge>
-              <h2 className="text-xl font-bold tracking-tight sm:text-2xl md:text-4xl">
-                Hitung Padat Tebar Ikan,{" "}
-                <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                  Akurat & Mudah
-                </span>
-              </h2>
-              <p className="mt-2 text-xs text-muted-foreground sm:mt-3 sm:text-sm md:text-base">
-                Pilih jenis ikan di bawah, masukkan ukuran kolam, dan dapatkan
-                estimasi padat tebar, biomassa panen, serta kebutuhan pakan &
-                protein secara otomatis.
-              </p>
-
-              {/* 3 Fitur utama */}
-              <div className="mt-3 grid grid-cols-3 gap-2 sm:mt-5 sm:gap-3">
-                <FeatureItem
-                  icon={<Fish className="h-4 w-4" />}
-                  title="Padat Tebar Akurat"
-                  desc="Berdasarkan SNI & KKP"
-                />
-                <FeatureItem
-                  icon={<Ruler className="h-4 w-4" />}
-                  title="Semua Bentuk Kolam"
-                  desc="Persegi, bulat, KJA sungai"
-                />
-                <FeatureItem
-                  icon={<Wheat className="h-4 w-4" />}
-                  title="Estimasi Pakan & Protein"
-                  desc="FCR + SNI protein"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ===== Main content ===== */}
         <main className="mx-auto w-full max-w-7xl flex-1 px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
           {/* Banner ikan terpilih — compact on mobile */}
@@ -774,547 +798,21 @@ export default function Home() {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
-            {/* === Kolom Kiri: Input — Collapsible on mobile === */}
+            {/* === Kolom Kiri: Input Tabs === */}
             <div className="lg:col-span-2">
-              {/* Mobile toggle for input section */}
-              <Collapsible open={inputExpanded} onOpenChange={setInputExpanded} className="lg:hidden">
-                <CollapsibleTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mb-3 w-full justify-between gap-2 bg-gradient-to-r from-emerald-50 to-teal-50 font-semibold text-emerald-700 border-emerald-200 hover:bg-emerald-100 hover:text-emerald-800 dark:from-emerald-950/40 dark:to-teal-950/40 dark:text-emerald-300 dark:border-emerald-800 dark:hover:bg-emerald-950/60"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Calculator className="h-4 w-4" />
-                      Parameter Input
-                    </span>
-                    {inputExpanded ? (
-                      <ChevronUp className="h-4 w-4" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4" />
-                    )}
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="space-y-4">
-                    {/* Card 1: Bentuk & Ukuran Kolam */}
-                    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
-                      <CardHeader className="pb-3 sm:pb-4">
-                        <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
-                          <Ruler className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
-                          Ukuran Kolam
-                        </CardTitle>
-                        <CardDescription className="text-[11px] sm:text-sm">
-                          Pilih bentuk & masukkan dimensi kolam Anda
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-3 sm:space-y-4">
-                        {/* Bentuk kolam */}
-                        <div className="space-y-2">
-                          <Label className="text-xs">
-                            Bentuk {isKja ? "KJA" : "Kolam"}
-                          </Label>
-                          <div className="grid grid-cols-2 gap-2">
-                            <Button
-                              type="button"
-                              variant={shape === "rectangular" ? "default" : "outline"}
-                              size="sm"
-                              className={`h-auto justify-start gap-2 py-2 ${
-                                shape === "rectangular"
-                                  ? "bg-emerald-600 hover:bg-emerald-700"
-                                  : ""
-                              }`}
-                              onClick={() => setShape("rectangular")}
-                              disabled={isKja}
-                            >
-                              <Square className="h-4 w-4" />
-                              <div className="text-left">
-                                <div className="text-xs font-semibold">Persegi</div>
-                                <div className="text-[11px] opacity-80">Panjang × Lebar</div>
-                              </div>
-                            </Button>
-                            <Button
-                              type="button"
-                              variant={shape === "circular" ? "default" : "outline"}
-                              size="sm"
-                              className={`h-auto justify-start gap-2 py-2 ${
-                                shape === "circular"
-                                  ? "bg-emerald-600 hover:bg-emerald-700"
-                                  : ""
-                              }`}
-                              onClick={() => setShape("circular")}
-                              disabled={isKja}
-                            >
-                              <Circle className="h-4 w-4" />
-                              <div className="text-left">
-                                <div className="text-xs font-semibold">Bulat</div>
-                                <div className="text-[11px] opacity-80">Diameter</div>
-                              </div>
-                            </Button>
-                          </div>
-                          {isKja && (
-                            <p className="text-[11px] text-muted-foreground">
-                              KJA umumnya berbentuk persegi (jaring kotak).
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Input dimensi */}
-                        {shape === "rectangular" ? (
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="space-y-1.5">
-                              <Label htmlFor="length" className="text-xs">
-                                Panjang (m)
-                              </Label>
-                              <Input
-                                id="length"
-                                type="number"
-                                min="0"
-                                step="0.1"
-                                value={length}
-                                onChange={(e) => setLength(e.target.value)}
-                                placeholder="4"
-                              />
-                            </div>
-                            <div className="space-y-1.5">
-                              <Label htmlFor="width" className="text-xs">
-                                Lebar (m)
-                              </Label>
-                              <Input
-                                id="width"
-                                type="number"
-                                min="0"
-                                step="0.1"
-                                value={width}
-                                onChange={(e) => setWidth(e.target.value)}
-                                placeholder="3"
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="space-y-1.5">
-                            <Label htmlFor="diameter" className="text-xs">
-                              Diameter (m)
-                            </Label>
-                            <Input
-                              id="diameter"
-                              type="number"
-                              min="0"
-                              step="0.1"
-                              value={diameter}
-                              onChange={(e) => setDiameter(e.target.value)}
-                              placeholder="3"
-                            />
-                          </div>
-                        )}
-
-                        {/* Input kedalaman untuk SEMUA sistem */}
-                        <div className="space-y-1.5">
-                          <Label htmlFor="depth" className="flex items-center gap-1 text-xs">
-                            Kedalaman Air (m)
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Info className="h-3 w-3 cursor-help text-muted-foreground" />
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
-                                <p>
-                                  Kedalaman air {isKja ? "jaring KJA" : "kolam"}. Ideal untuk{" "}
-                                  {selectedSystem.name}: {selectedSystem.depthRange[0]}-
-                                  {selectedSystem.depthRange[1]} m. Volume air = Luas × Kedalaman.
-                                </p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </Label>
-                          <Input
-                            id="depth"
-                            type="number"
-                            min="0"
-                            step="0.1"
-                            value={depth}
-                            onChange={(e) => setDepth(e.target.value)}
-                            placeholder="1"
-                          />
-                          <p className="text-[11px] text-muted-foreground">
-                            Rekomendasi {selectedSystem.name}: {selectedSystem.depthRange[0]}-
-                            {selectedSystem.depthRange[1]} m
-                          </p>
-                        </div>
-
-                        {/* Hasil luas / volume air */}
-                        {result && (
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between rounded-md bg-muted/60 px-3 py-2">
-                              <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                                <Waves className="h-3.5 w-3.5" />
-                                Luas Permukaan
-                              </span>
-                              <span className="text-sm font-semibold">
-                                {formatNumber(result.area, 2)} m²
-                              </span>
-                            </div>
-                            {/* Volume air untuk SEMUA sistem */}
-                            {result.volume !== null && (
-                              <div className="flex items-center justify-between rounded-md bg-emerald-50 px-3 py-2 dark:bg-emerald-950/30">
-                                <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-                                  <Box className="h-3.5 w-3.5" />
-                                  Volume Air
-                                </span>
-                                <span className="text-sm font-bold text-emerald-700 dark:text-emerald-300">
-                                  {formatNumber(result.volume, 2)} m³
-                                  <span className="ml-1 text-[11px] font-normal">
-                                    ({formatNumber(result.waterVolumeLiter, 0)} L)
-                                  </span>
-                                </span>
-                              </div>
-                            )}
-                            {/* Estimasi penggantian air harian */}
-                            {!isKja && (
-                              <div className="flex items-center justify-between rounded-md bg-sky-50 px-3 py-2 dark:bg-sky-950/30">
-                                <span className="flex items-center gap-1.5 text-xs font-medium text-sky-700 dark:text-sky-300">
-                                  <Droplets className="h-3.5 w-3.5" />
-                                  Penggantian Air/Hari
-                                </span>
-                                <span className="text-xs font-semibold text-sky-700 dark:text-sky-300">
-                                  {formatNumber(result.dailyWaterChangeLiter, 0)} L
-                                  <span className="ml-1 text-[11px] font-normal">
-                                    ({result.waterExchangeRate[0]}-{result.waterExchangeRate[1]}%)
-                                  </span>
-                                </span>
-                              </div>
-                            )}
-                            {isKja && (
-                              <div className="rounded-md bg-sky-50 px-3 py-2 dark:bg-sky-950/30">
-                                <p className="text-[11px] text-sky-700 dark:text-sky-300">
-                                  💧 KJA: Air mengalir kontinyu dari arus sungai — tidak perlu penggantian manual.
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
-
-                    {/* Card 2: Jenis Ikan & Sistem */}
-                    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
-                      <CardHeader className="pb-3 sm:pb-4">
-                        <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
-                          <Fish className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
-                          Ikan & Sistem Budidaya
-                        </CardTitle>
-                        <CardDescription className="text-[11px] sm:text-sm">
-                          Pilih komoditas & metode pemeliharaan
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-3 sm:space-y-4">
-                        {/* Jenis Ikan */}
-                        <div className="space-y-1.5">
-                          <Label htmlFor="fish" className="text-xs">
-                            Jenis Ikan
-                          </Label>
-                          <Select value={fishId} onValueChange={handleFishChangeSync}>
-                            <SelectTrigger id="fish" className="w-full">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {FISH_SPECIES.map((f) => (
-                                <SelectItem key={f.id} value={f.id}>
-                                  <span className="mr-1.5">{f.emoji}</span>
-                                  {f.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        {/* Sistem Budidaya */}
-                        <div className="space-y-1.5">
-                          <Label htmlFor="system" className="text-xs">
-                            Sistem Budidaya
-                          </Label>
-                          <Select
-                            value={systemId}
-                            onValueChange={(v) =>
-                              handleSystemChange(v as CultivationSystem)
-                            }
-                          >
-                            <SelectTrigger id="system" className="w-full">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SYSTEMS.map((s) => (
-                                <SelectItem key={s.id} value={s.id}>
-                                  {s.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        {/* Padat tebar slider */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label className="flex items-center gap-1 text-xs">
-                              Padat Tebar
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Info className="h-3 w-3 cursor-help text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent className="max-w-xs">
-                                  <p>
-                                    Jumlah benih per {capacityUnit}.{" "}
-                                    {isKja
-                                      ? "KJA berbasis volume (m³). "
-                                      : "Kolam berbasis luas (m²). "}
-                                    Rekomendasi untuk {selectedFish.name} di sistem{" "}
-                                    {selectedSystem.name.toLowerCase()}:{" "}
-                                    {densityRange[0]}-{densityRange[1]} ekor/{capacityUnit}
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </Label>
-                            <Badge
-                              variant="outline"
-                              className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
-                            >
-                              {density} ekor/{capacityUnit}
-                            </Badge>
-                          </div>
-                          <Slider
-                            value={[density]}
-                            min={Math.max(5, densityRange[0] - Math.round(densityRange[0] * 0.5))}
-                            max={densityRange[1] + Math.round(densityRange[1] * 0.5)}
-                            step={5}
-                            onValueChange={(v) => setDensity(v[0])}
-                            className="py-1"
-                          />
-                          <div className="flex justify-between text-[10px] text-muted-foreground">
-                            <span className="hidden sm:inline">
-                              Min rekomendasi: {densityRange[0]} ekor/{capacityUnit}
-                            </span>
-                            <span className="sm:hidden">
-                              Min: {densityRange[0]}
-                            </span>
-                            <span className="hidden sm:inline">
-                              Maks rekomendasi: {densityRange[1]} ekor/{capacityUnit}
-                            </span>
-                            <span className="sm:hidden">
-                              Maks: {densityRange[1]}
-                            </span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Card 3: Parameter Produksi */}
-                    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
-                      <CardHeader className="pb-3 sm:pb-4">
-                        <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
-                          <TrendingUp className="h-4 w-4 text-emerald-600 sm:h-5 sm:w-5" />
-                          Parameter Produksi
-                        </CardTitle>
-                        <CardDescription className="text-[11px] sm:text-sm">
-                          Atur parameter untuk estimasi hasil panen
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-3 sm:space-y-4">
-                        {/* Benih awal */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label className="flex items-center gap-1 text-xs">
-                              Ukuran Benih
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Info className="h-3 w-3 cursor-help text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Berat rata-rata benih saat ditebar (gram/ekor).
-                                  Konversi cm berdasarkan rumus length-weight FishBase.</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </Label>
-                            <span className="text-xs font-semibold">
-                              {formatNumber(seedSize, seedSize < 1 ? 3 : seedSize < 10 ? 1 : 0)} gram
-                            </span>
-                          </div>
-                          <Slider
-                            value={[seedSize]}
-                            min={selectedFish.seedSizeRange[0]}
-                            max={selectedFish.seedSizeRange[1]}
-                            step={selectedFish.seedSizeRange[1] < 1 ? 0.001 : selectedFish.seedSizeRange[1] < 10 ? 0.1 : 0.5}
-                            onValueChange={(v) => setSeedSize(v[0])}
-                          />
-                          <p className="text-[11px] text-muted-foreground">
-                            ≈ {formatNumber(weightToLength(seedSize, selectedFish), 1)} cm panjang total
-                            (min {selectedFish.seedSizeRange[0]}g ≈ 5 cm)
-                          </p>
-                        </div>
-
-                        {/* Target panen */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label className="text-xs">Target Ukuran Panen</Label>
-                            <span className="text-xs font-semibold">
-                              {harvestSize} gram
-                            </span>
-                          </div>
-                          <Slider
-                            value={[harvestSize]}
-                            min={selectedFish.harvestSizeRange[0]}
-                            max={selectedFish.harvestSizeRange[1]}
-                            step={10}
-                            onValueChange={(v) => setHarvestSize(v[0])}
-                          />
-                          <p className="text-[11px] text-muted-foreground">
-                            ≈ {formatNumber(weightToLength(harvestSize, selectedFish), 1)} cm panjang total
-                            (maks {selectedFish.harvestSizeRange[1]} g)
-                          </p>
-                        </div>
-
-                        {/* Survival Rate */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label className="flex items-center gap-1 text-xs">
-                              Survival Rate (SR)
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Info className="h-3 w-3 cursor-help text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Persentase ikan yang bertahan hidup hingga panen</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </Label>
-                            <span className="text-xs font-semibold">{sr}%</span>
-                          </div>
-                          <Slider
-                            value={[sr]}
-                            min={50}
-                            max={100}
-                            step={1}
-                            onValueChange={(v) => setSr(v[0])}
-                          />
-                        </div>
-
-                        {/* FCR */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label className="flex items-center gap-1 text-xs">
-                              FCR (Feed Conversion Ratio)
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Info className="h-3 w-3 cursor-help text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>
-                                    Kg pakan untuk menghasilkan 1 kg daging ikan.
-                                    Semakin rendah semakin efisien. Rekomendasi untuk{" "}
-                                    {selectedFish.name}: {selectedFish.fcrRange[0]}-
-                                    {selectedFish.fcrRange[1]}.
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </Label>
-                            <Badge
-                              variant="outline"
-                              className={
-                                fcr < selectedFish.fcrRange[0] ||
-                                fcr > selectedFish.fcrRange[1]
-                                  ? "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300"
-                                  : "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
-                              }
-                            >
-                              {fcr}
-                            </Badge>
-                          </div>
-                          <Slider
-                            value={[fcr * 100]}
-                            min={80}
-                            max={200}
-                            step={1}
-                            onValueChange={(v) => setFcr(v[0] / 100)}
-                          />
-                          <div className="flex justify-between text-[10px] text-muted-foreground">
-                            <span className="hidden sm:inline">0.8 (sangat efisien)</span>
-                            <span className="sm:hidden">0.8</span>
-                            <span>
-                              {selectedFish.fcrRange[0]}-{selectedFish.fcrRange[1]}
-                            </span>
-                            <span className="hidden sm:inline">2.0 (kurang efisien)</span>
-                            <span className="sm:hidden">2.0</span>
-                          </div>
-                        </div>
-
-                        {/* Kandungan Protein Pakan (Grower) */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <Label className="flex items-center gap-1 text-xs">
-                              Kandungan Protein Pakan
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Info className="h-3 w-3 cursor-help text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent className="max-w-xs">
-                                  <p>
-                                    % protein pakan untuk fase pembesaran (grower).
-                                    Rekomendasi SNI untuk {selectedFish.name}:{" "}
-                                    {selectedFish.proteinRange.grower[0]}-
-                                    {selectedFish.proteinRange.grower[1]}% (grower),{" "}
-                                    {selectedFish.proteinRange.starter[0]}-
-                                    {selectedFish.proteinRange.starter[1]}% (starter
-                                    benih).
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </Label>
-                            <Badge
-                              variant="outline"
-                              className={
-                                proteinPercent < selectedFish.proteinRange.grower[0] ||
-                                proteinPercent > selectedFish.proteinRange.grower[1]
-                                  ? "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300"
-                                  : "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
-                              }
-                            >
-                              {proteinPercent}%
-                            </Badge>
-                          </div>
-                          <Slider
-                            value={[proteinPercent]}
-                            min={20}
-                            max={45}
-                            step={1}
-                            onValueChange={(v) => setProteinPercent(v[0])}
-                            className="py-1"
-                          />
-                          <div className="flex justify-between text-[10px] text-muted-foreground">
-                            <span>
-                              SNI grower: {selectedFish.proteinRange.grower[0]}-
-                              {selectedFish.proteinRange.grower[1]}%
-                            </span>
-                            <span>
-                              SNI starter: {selectedFish.proteinRange.starter[0]}-
-                              {selectedFish.proteinRange.starter[1]}%
-                            </span>
-                          </div>
-                        </div>
-
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="w-full text-xs text-muted-foreground"
-                          onClick={handleReset}
-                        >
-                          <RotateCcw className="mr-1.5 h-3 w-3" />
-                          Reset ke Default
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-
-              {/* Desktop: always visible input cards */}
-              <div className="hidden lg:block space-y-6">
+              <Tabs value={inputTab} onValueChange={setInputTab}>
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="kolam" className="gap-1.5 text-xs">
+                    <Ruler className="h-3.5 w-3.5" /> Kolam
+                  </TabsTrigger>
+                  <TabsTrigger value="ikan" className="gap-1.5 text-xs">
+                    <Fish className="h-3.5 w-3.5" /> Ikan & Sistem
+                  </TabsTrigger>
+                  <TabsTrigger value="parameter" className="gap-1.5 text-xs">
+                    <TrendingUp className="h-3.5 w-3.5" /> Parameter
+                  </TabsTrigger>
+                </TabsList>
+              <TabsContent value="kolam" className="mt-3">
                 {/* Card 1: Bentuk & Ukuran Kolam */}
                 <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                   <CardHeader className="pb-4">
@@ -1511,7 +1009,8 @@ export default function Home() {
                     )}
                   </CardContent>
                 </Card>
-
+              </TabsContent>
+              <TabsContent value="ikan" className="mt-3">
                 {/* Card 2: Jenis Ikan & Sistem */}
                 <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                   <CardHeader className="pb-4">
@@ -1616,7 +1115,8 @@ export default function Home() {
                     </div>
                   </CardContent>
                 </Card>
-
+              </TabsContent>
+              <TabsContent value="parameter" className="mt-3">
                 {/* Card 3: Parameter Produksi */}
                 <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
                   <CardHeader className="pb-4">
@@ -1820,7 +1320,8 @@ export default function Home() {
                     </Button>
                   </CardContent>
                 </Card>
-              </div>
+              </TabsContent>
+              </Tabs>
             </div>
 
             {/* === Kolom Kanan: Hasil === */}
@@ -1887,6 +1388,8 @@ export default function Home() {
                     fishId={fishId}
                     systemId={systemId}
                     shape={shape}
+                    activeTab={resultTab}
+                    onTabChange={setResultTab}
                   />
                 </>
               )}
@@ -1922,96 +1425,3 @@ export default function Home() {
   );
 }
 
-// ---------- Komponen Feature Item (Hero) ----------
-function FeatureItem({
-  icon,
-  title,
-  desc,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-}) {
-  return (
-    <div className="flex items-center gap-2.5 rounded-lg border border-border/60 bg-card/60 p-2 backdrop-blur sm:p-2.5">
-      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 sm:h-8 sm:w-8">
-        {icon}
-      </div>
-      <div className="min-w-0">
-        <p className="truncate text-[11px] font-semibold sm:text-xs">{title}</p>
-        <p className="truncate text-[11px] text-muted-foreground sm:text-xs">{desc}</p>
-      </div>
-    </div>
-  );
-}
-
-// ---------- Komponen Stat Card ----------
-function StatCard({
-  icon,
-  label,
-  value,
-  sublabel,
-  tone,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  sublabel?: string;
-  tone: "emerald" | "teal" | "sky" | "amber";
-}) {
-  const toneClasses = {
-    emerald: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300",
-    teal: "bg-teal-100 text-teal-700 dark:bg-teal-950/40 dark:text-teal-300",
-    sky: "bg-sky-100 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300",
-    amber: "bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300",
-  };
-
-  return (
-    <Card className="border-border/60 shadow-sm transition-shadow hover:shadow-md">
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-muted-foreground">{label}</p>
-            <p className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
-              {value}
-            </p>
-            {sublabel && (
-              <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
-                {sublabel}
-              </p>
-            )}
-          </div>
-          <div
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${toneClasses[tone]}`}
-          >
-            {icon}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-// ---------- Komponen Row ----------
-function Row({
-  label,
-  value,
-  highlight,
-}: {
-  label: string;
-  value: string;
-  highlight?: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span
-        className={`text-right text-xs ${
-          highlight ? "font-bold text-emerald-700 dark:text-emerald-400" : "font-medium"
-        }`}
-      >
-        {value}
-      </span>
-    </div>
-  );
-}

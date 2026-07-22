@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -12,8 +11,6 @@ import {
 import {
   Tabs,
   TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -32,9 +29,6 @@ import {
   Droplets,
   Wheat,
   Beaker,
-  Wallet,
-  CalendarDays,
-  Activity,
   Sparkles,
   Clock,
   AlertTriangle,
@@ -117,6 +111,8 @@ interface ResultTabsProps {
   fishId: string;
   systemId: string;
   shape: PondShape;
+  activeTab: string;
+  onTabChange: (tab: string) => void;
 }
 
 function formatNumber(n: number, decimals = 0): string {
@@ -140,8 +136,9 @@ export function ResultTabs({
   fishId,
   systemId,
   shape,
+  activeTab,
+  onTabChange,
 }: ResultTabsProps) {
-  const [activeTab, setActiveTab] = useState("summary");
 
   return (
     <div className="space-y-4">
@@ -250,44 +247,7 @@ export function ResultTabs({
       {/* ===== Main Tabs ===== */}
       {/* min-w-0 + overflow-hidden ensures the Tabs container cannot be widened
           by its inner content (e.g. Pakan tab's horizontal-scrollable tables). */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full min-w-0 overflow-hidden">
-        {/* TabsList wrapped in horizontal-scroll container for mobile (6 buttons
-            don't fit in 360px). On desktop fills full width via w-full. */}
-        <div className="overflow-x-auto pb-1.5 -mx-1 px-1">
-          <TabsList className="grid w-full grid-cols-6 gap-1 min-w-[480px] sm:min-w-0">
-            <TabsTrigger value="summary" className="flex-col gap-1 px-2 py-2.5 text-[10px] min-h-[52px] sm:flex-row sm:text-xs sm:px-2.5 sm:py-2.5">
-              <Sparkles className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden sm:inline">Ringkasan</span>
-              <span className="sm:hidden">Ringkas</span>
-            </TabsTrigger>
-            <TabsTrigger value="production" className="flex-col gap-1 px-2 py-2.5 text-[10px] min-h-[52px] sm:flex-row sm:text-xs sm:px-2.5 sm:py-2.5">
-              <TrendingUp className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden sm:inline">Produksi</span>
-              <span className="sm:hidden">Produksi</span>
-            </TabsTrigger>
-            <TabsTrigger value="feed" className="flex-col gap-1 px-2 py-2.5 text-[10px] min-h-[52px] sm:flex-row sm:text-xs sm:px-2.5 sm:py-2.5">
-              <Wheat className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden sm:inline">Pakan</span>
-              <span className="sm:hidden">Pakan</span>
-            </TabsTrigger>
-            <TabsTrigger value="profit" className="flex-col gap-1 px-2 py-2.5 text-[10px] min-h-[52px] sm:flex-row sm:text-xs sm:px-2.5 sm:py-2.5">
-              <Wallet className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden sm:inline">Profit</span>
-              <span className="sm:hidden">Profit</span>
-            </TabsTrigger>
-            <TabsTrigger value="water" className="flex-col gap-1 px-2 py-2.5 text-[10px] min-h-[52px] sm:flex-row sm:text-xs sm:px-2.5 sm:py-2.5">
-              <Activity className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden sm:inline">Kualitas Air</span>
-              <span className="sm:hidden">Air</span>
-            </TabsTrigger>
-            <TabsTrigger value="calendar" className="flex-col gap-1 px-2 py-2.5 text-[10px] min-h-[52px] sm:flex-row sm:text-xs sm:px-2.5 sm:py-2.5">
-              <CalendarDays className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden sm:inline">Kalender</span>
-              <span className="sm:hidden">Kalender</span>
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
+      <Tabs value={activeTab} onValueChange={onTabChange} className="w-full min-w-0 overflow-hidden">
         {/* === Tab: Ringkasan === */}
         <TabsContent value="summary" className="space-y-4 mt-3">
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
